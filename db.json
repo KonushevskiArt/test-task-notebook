@@ -1,0 +1,8 @@
+{
+  "notes": 
+  [
+    { "id": 1, "title": "first-server", "tegs": ["one", "two"]},
+    { "id": 2, "title": "second-server", "tegs": ["five", "six", "eight", "eight"]},
+    { "id": 3, "title": "third text about something", "tegs": ["ten"]}
+  ]
+}

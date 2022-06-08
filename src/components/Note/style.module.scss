@@ -1,0 +1,69 @@
+.Note {
+  padding: 15px 40px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid var(--text-color1);
+  background-color: var(--main-color3);
+  -webkit-box-shadow: 0px 2px 13px 1px rgba(12, 19, 24, 0.48);
+  -moz-box-shadow: 0px 2px 13px 1px rgba(12, 19, 24, 0.48);
+  box-shadow: 0px 2px 13px 1px rgba(12, 19, 24, 0.48);
+}
+.form {
+  display: flex;
+  justify-content: space-between;
+}
+.title {
+  font-size: 20px;
+  color: var(--text-color1);
+  margin-bottom: 10px;
+}
+.btnWrapper {
+  display: flex;
+}
+.input {
+  padding: 5px;
+  font-size: 18px;
+  border-radius: 3px;
+  border: none;
+  flex-grow: 1;
+  margin-right: 20px;
+}
+
+.btnEdit {
+  margin-right: 20px;
+  border: 1px solid var(--text-color1);
+  &:hover {
+    background-color: var(--text-color1);
+    color: var(--main-color3);
+  }
+}
+.btnRemove{
+  background-color: var(--text-color1);
+  color: var(--error-color);
+  &:hover {
+    background-color: var(--error-color);
+    color: var(--text-color1);
+  }
+}
+.content {
+
+}
+.tegsWrapper {
+  list-style-type: none;
+  display: flex;
+}
+@media (max-width: 576px) { 
+  .form {
+    flex-direction: column;
+  }
+  .btnWrapper {
+    margin-top: 20px;
+  }
+  .Note {
+    padding: 20px 20px;
+  }
+  .input {
+    margin-right: 0px;
+  }
+}

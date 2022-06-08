@@ -1,7 +1,28 @@
-
 :root {
-  --main-color: #0079bf;
-  --main-color-light: #308bc1;
-  --main-color-light-hover: #4c94bd;
-  --main-color-dark: #0066a0;
+  --main-color1: #f47e7e;
+  --main-color2: #6aafc8;
+  --main-color3: #b5884d;
+  --text-color1: #ffffff;
+  --error-color: rgb(184, 25, 25);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.app {
+  background-color: var(--main-color1);
+  height: 100vh;
+  width: 100vw;
+}
+.btn {
+  padding: 5px 15px;
+  border-radius: 3px;
+  font-size: 18px;
+  border: none;
+  background-color: transparent;
+  border: 1px solid var(--text-color1);
+  color: var(--text-color1);
+  transition: background-color 0.2s, color 0.2s;
+  cursor: pointer;
 }
