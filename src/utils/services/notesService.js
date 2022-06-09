@@ -13,6 +13,9 @@ const notesService = {
     return axios.delete(`${url}/${id}`).then(data => data.data);
   },
   editOneById: (id, newData) => {
+    return axios.put(`${url}/${id}`, newData).then(data => data.data);
+  },
+  removeTegInNoteById: (id, newData) => {
     return axios.patch(`${url}/${id}`, newData).then(data => data.data);
   }
 } 

@@ -7,17 +7,19 @@ import notesService from '../../utils/services/notesService';
 
 function App() {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [isError, setError] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
+    setLoading(true);
+    setError(false);
     notesService.getAll()
     .then((notes) => {
-        console.log(notes)
         setData(notes);
-        setIsLoading(false);
+        setLoading(false);
       })
       .catch((e) => {
+        setError(true);
         console.log("Network error:", e.message);
       })
   }, [])
@@ -27,6 +29,7 @@ function App() {
       <Layout>
         <NoteCreater />
         {isLoading && <p>Laoding...</p>}
+        {isError && <p>Error...</p>}
         {data.length && <ListOfNotes data={data} />}
       </Layout>
     </div>

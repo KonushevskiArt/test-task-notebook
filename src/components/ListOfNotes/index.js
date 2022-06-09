@@ -4,7 +4,6 @@ import s from './style.module.scss';
 
 function ListOfNotes({ data }) {
   const [listOfNotes, setListOfNotes] = useState(data);
-  console.log(listOfNotes);
 
   return (
     <ul className={s.list}>

@@ -3,6 +3,7 @@
   --main-color2: #6aafc8;
   --main-color3: #b5884d;
   --text-color1: #ffffff;
+  --highlight: rgb(243, 231, 66);
   --error-color: rgb(184, 25, 25);
 }
 * {
@@ -25,4 +26,8 @@
   color: var(--text-color1);
   transition: background-color 0.2s, color 0.2s;
   cursor: pointer;
+}
+.highLight {
+  font-style: italic;
+  color: var(--highlight);
 }

@@ -29,15 +29,25 @@
   align-items: flex-start;
   margin-left: 20px;
 }
-.input {
+.textarea {
+  resize: vertical;
+  max-height: 100px;
+  min-height: 40px;
   padding: 5px;
   font-size: 18px;
   border-radius: 3px;
   border: none;
+  width: 100%;
   flex-grow: 1;
   margin-right: 20px;
+  margin-bottom: 10px;
 }
-
+.textareaError {
+  border: 2px solid var(--error-color);
+}
+.errorMessage {
+  color: var(--error-color);
+}
 .btnEdit {
   margin-right: 20px;
   color: var(--main-color2);
@@ -64,7 +74,11 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  
+}
+.editWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 @media (max-width: 576px) { 
   .form {

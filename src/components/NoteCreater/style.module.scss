@@ -14,6 +14,7 @@
 }
 .btnWrapper {
   display: flex;
+  align-items: flex-start;
 }
 .input {
   padding: 5px;
@@ -39,6 +40,15 @@
     background-color: var(--main-color2);
     color: var(--text-color1);
   }
+}
+.inputWrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.error {
+  margin-top: 10px;
+  color: var(--error-color);
 }
 @media (max-width: 576px) { 
   .form {

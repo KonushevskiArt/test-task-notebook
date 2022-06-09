@@ -1,48 +1,96 @@
 import React, {useState} from 'react';
 import s from './style.module.scss';
-import { useForm } from "react-hook-form";
 import Teg from './Teg';
+import notesService from '../../utils/services/notesService';
+import { useHighlightTags } from '../../hooks/useHighlightTags';
+import { createStrWithTegs } from '../../utils/createStrWithTegs';
+import { createNewNote } from '../../utils/createNewNote';
 
 const Note = ({ data }) => {
   const { title, id, tegs } = data;
-  const [isEdit, setIsEdit] = useState(false);
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const [previousValue, setPreviousValue] = useState(title);
+  const [currentTitleWithTegs, setCurrentTitleWithTegs] = useState(title);
+  const [isEdit, setEdit] = useState(false);
 
   const noteClickHandler = () => {
     console.log('open modal');
   }
 
-  const onSubmit = data => console.log(data);
+  const removeNoteHandler = () => {
+    notesService.removeOneById(id)
+    .then(data => {
+      console.log('response data:', data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
 
-  const maxLength = 80;
+  const handleEdit = () => {
+    setEdit(true);
+    const strWithTegs = createStrWithTegs(title, tegs);
+    setCurrentTitleWithTegs(strWithTegs);
+    setPreviousValue(strWithTegs)
+  }
+
+  const handleChangeTitle = (e) => {
+    console.log(e.currentTarget.value)
+    setCurrentTitleWithTegs(e.currentTarget.value);
+  }
+
+  const handleSave = () => {
+    setEdit(false);
+    if (currentTitleWithTegs !== previousValue) {
+      console.log('request !!!!!!!!!!!!!!!!')
+      const newNote = createNewNote(currentTitleWithTegs);
+      notesService.editOneById(id, newNote)
+      .then(data => {
+        console.log('response data:', data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+  }
+
+  const maxLength = 160;
+  const highLightTitle = useHighlightTags(title, tegs);
 
   return (
     <li className={s.Note}>
-       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+       <div className={s.form}>
         {!isEdit && (
-          <div className={s.content}>
-            <h4 className={s.title} onClick={noteClickHandler}>{title}</h4>
-            
-          </div>
+            <h4 className={s.title} onClick={noteClickHandler}>{highLightTitle}</h4>
         )}
         {isEdit && (
-          <input 
-            placeholder='enter text' 
-            className={s.input} 
-            {...register("message", { maxLength: maxLength })} 
+          <textarea 
+            maxLength={maxLength}
+            defaultValue={currentTitleWithTegs}
+            className={s.textarea} 
+            onChange={(e) => handleChangeTitle(e)}
           />
         )}
-        {errors.message && <span>You can't use more than {maxLength} characters</span>}
         <div className={s.btnWrapper}>
-          <button onClick={() => setIsEdit(!isEdit)} className={`btn ${s.btnEdit}`}>edit</button>
-          <button className={`btn ${s.btnRemove}`}>remove</button>
+          {!isEdit 
+            ? 
+            (<button onClick={handleEdit} className={`btn ${s.btnEdit}`}>
+              edit
+            </button>)
+            :
+            (<button  onClick={handleSave} className={`btn ${s.btnEdit}`}>
+              save
+            </button>)
+          }
+          <button type='button' onClick={removeNoteHandler} className={`btn ${s.btnRemove}`}>
+            remove
+          </button>
         </div>
-      </form>
+      </div>
       <ul className={s.tegsWrapper}>
         {tegs.map((teg, i) => {
           if (i < 10) {
             return (
-              <Teg key={teg + Math.random()} data={{id, teg}} />
+              <Teg key={teg + Math.random()} data={{id, teg, tegs}} />
             )
           }
           return null;
