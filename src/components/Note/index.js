@@ -22,11 +22,7 @@ const Note = ({ data }) => {
         {!isEdit && (
           <div className={s.content}>
             <h4 className={s.title} onClick={noteClickHandler}>{title}</h4>
-            <ul className={s.tegsWrapper}>
-              {tegs.map(teg => (
-                <Teg key={teg + Math.random()} data={{id, teg}} />
-              ))}
-            </ul>
+            
           </div>
         )}
         {isEdit && (
@@ -42,6 +38,16 @@ const Note = ({ data }) => {
           <button className={`btn ${s.btnRemove}`}>remove</button>
         </div>
       </form>
+      <ul className={s.tegsWrapper}>
+        {tegs.map((teg, i) => {
+          if (i < 10) {
+            return (
+              <Teg key={teg + Math.random()} data={{id, teg}} />
+            )
+          }
+          return null;
+        })}
+      </ul>
     </li>
   );
 };

@@ -1,9 +1,20 @@
 .teg {
-
+  padding: 0px 5px;
+  border-radius: 5px;
+  border: 1px solid var(--text-color1);
+  &:hover {
+    border: 1px solid var(--main-color2);
+  }
 }
 .tegContent {
-
+  color: var(--text-color1);
+  font-size: 16px;
 }
 .btnRemoveTeg {
-
+  border: none;
+  padding: 3px;
+  fill: var(--text-color1);
+  &:hover {
+    fill: var(--error-color);
+  }
 }
