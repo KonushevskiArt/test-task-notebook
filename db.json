@@ -1,20 +1,25 @@
 {
   "notes": [
     {
-      "title": "hellow world that's my first note ",
-      "tegs": [
-        "that's"
-      ],
-      "id": 1
+      "title": "sdfsd asdfasdf\n",
+      "tegs": [],
+      "id": 4
     },
     {
-      "title": "i am Artem and i want to be frontend dev",
+      "title": "asdfasdf sadf     d  a asdf\nfdf\n\nsd",
       "tegs": [
-        "Artem",
-        "i",
-        "dev"
+        "d"
       ],
-      "id": 2
+      "id": 6
+    },
+    {
+      "title": "fla    asdf asdf                    dd\n\n\nkk",
+      "tegs": [
+        "fla",
+        "dd",
+        "kk"
+      ],
+      "id": 7
     }
   ]
 }

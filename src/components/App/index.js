@@ -4,9 +4,12 @@ import Layout from '../Layout';
 import ListOfNotes from '../ListOfNotes';
 import NoteCreater from '../NoteCreater';
 import notesService from '../../utils/services/notesService';
+import { useSelector, useDispatch } from 'react-redux';
+import { setList } from '../../store/notesSlice';
 
 function App() {
-  const [data, setData] = useState([]);
+  const listOfNotes = useSelector((state) => state.notes.listOfNotes);
+  const dispatch = useDispatch()
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState(false);
 
@@ -14,8 +17,8 @@ function App() {
     setLoading(true);
     setError(false);
     notesService.getAll()
-    .then((notes) => {
-        setData(notes);
+    .then((data) => {
+        dispatch(setList(data))
         setLoading(false);
       })
       .catch((e) => {
@@ -30,7 +33,7 @@ function App() {
         <NoteCreater />
         {isLoading && <p>Laoding...</p>}
         {isError && <p>Error...</p>}
-        {data.length && <ListOfNotes data={data} />}
+        {listOfNotes.length && <ListOfNotes listOfNotes={listOfNotes} />}
       </Layout>
     </div>
   );

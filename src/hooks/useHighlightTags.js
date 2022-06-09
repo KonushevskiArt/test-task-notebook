@@ -1,5 +1,5 @@
 export const useHighlightTags = (str = '', tegs = []) => {
-  return str.split(' ').map((word, i) => {
+  return str.split(/\s+/).map((word, i) => {
     if (tegs.includes(word)) {
       return <span key={word + i} className='highLight'>{word}</span> 
     } else {

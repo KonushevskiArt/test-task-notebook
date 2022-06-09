@@ -5,9 +5,12 @@ import notesService from '../../utils/services/notesService';
 import { useHighlightTags } from '../../hooks/useHighlightTags';
 import { createStrWithTegs } from '../../utils/createStrWithTegs';
 import { createNewNote } from '../../utils/createNewNote';
+import { useDispatch } from 'react-redux';
+import { edit, remove } from '../../store/notesSlice';
 
 const Note = ({ data }) => {
   const { title, id, tegs } = data;
+  const dispatch = useDispatch()
   const [previousValue, setPreviousValue] = useState(title);
   const [currentTitleWithTegs, setCurrentTitleWithTegs] = useState(title);
   const [isEdit, setEdit] = useState(false);
@@ -19,7 +22,7 @@ const Note = ({ data }) => {
   const removeNoteHandler = () => {
     notesService.removeOneById(id)
     .then(data => {
-      console.log('response data:', data);
+      dispatch(remove(id));
     })
     .catch(error => {
       console.log(error);
@@ -34,18 +37,17 @@ const Note = ({ data }) => {
   }
 
   const handleChangeTitle = (e) => {
-    console.log(e.currentTarget.value)
     setCurrentTitleWithTegs(e.currentTarget.value);
   }
 
   const handleSave = () => {
     setEdit(false);
     if (currentTitleWithTegs !== previousValue) {
-      console.log('request !!!!!!!!!!!!!!!!')
       const newNote = createNewNote(currentTitleWithTegs);
       notesService.editOneById(id, newNote)
       .then(data => {
-        console.log('response data:', data);
+        const fullNote = {...newNote, id};
+        dispatch(edit({id, fullNote}));
       })
       .catch(error => {
         console.log(error);

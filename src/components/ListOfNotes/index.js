@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import Note from '../Note';
 import s from './style.module.scss';
 
-function ListOfNotes({ data }) {
-  const [listOfNotes, setListOfNotes] = useState(data);
-
+function ListOfNotes({listOfNotes}) {
   return (
     <ul className={s.list}>
         {!listOfNotes.length && <li>There is no data</li>}

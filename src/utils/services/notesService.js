@@ -1,7 +1,7 @@
 import axios from 'axios';
 const url = 'http://localhost:3002/notes';
 const prodUrl = window.location.href + 'localhost:3002/notes'; 
-
+console.log('prodUrl****', prodUrl);
 const notesService = {
   getAll: () => {
     return axios.get(url).then(data => data.data);
