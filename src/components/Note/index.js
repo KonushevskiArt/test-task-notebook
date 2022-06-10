@@ -56,7 +56,12 @@ const Note = ({ data }) => {
     <li className={s.Note}>
        <div className={s.form}>
         {!isEdit && (
-            <h4 className={s.title} onClick={noteClickHandler}>{highLightTitle}</h4>
+          <h4 
+            title={!isEdit ? 'click to display the modal window': null}
+            className={s.title} 
+            onClick={noteClickHandler}>
+              {highLightTitle}
+          </h4>
         )}
         {isEdit && (
           <textarea 
