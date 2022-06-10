@@ -29,7 +29,6 @@ function App() {
         console.log("Network error:", e.message);
       })
   }, [])
-  console.log(listOfNotes)
  
   return (
     <div className="app">
