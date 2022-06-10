@@ -22,7 +22,7 @@
   },
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run start\"",
-    "build-with-server": "concurrently \"npm run server\" \"npm run build\"",
+    "build-with-server": "CI='' concurrently \"npm run server\" \"npm run build\"",
     "start": "react-scripts start",
     "server": "json-server --watch db.json -p 3002",
     "build": "react-scripts build",
