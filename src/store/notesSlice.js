@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   listOfNotes: [],
   filteredNotes: [],
+  filter: '',
 }
 
 export const notesSlice = createSlice({
@@ -22,22 +23,28 @@ export const notesSlice = createSlice({
     edit: (state, action) => {
       const index = state.listOfNotes.findIndex((el) => el.id === action.payload.id);
       state.listOfNotes[index] = action.payload.fullNote;
-      console.log('edit', action)
     },
     removeTeg: (state, action) => {
       const index = state.listOfNotes.findIndex((el) => el.id === action.payload.id)
-      // const tegIndex = state.listOfNotes[index].tegs.findIndex(el => el === action.payload.teg);
-      console.log(state.listOfNotes, action.payload.id)
       state.listOfNotes[index].tegs = action.payload.newTegs;
-      console.log('edit', action)
     },
     filter: (state, action) => {
-      // state.value += action.payload
-      console.log('filter', action);
+      if (state.filter.trim().length === 0) {
+        state.filteredNotes = state.listOfNotes; 
+      } else {
+        const tegs = state.filter.split(/\s+/g);
+        const filteredList =  state.listOfNotes.filter((note) => {
+          return tegs.every(teg => note.tegs.includes(teg));
+        })
+        state.filteredNotes = filteredList; 
+      }
+    },
+    changeFilter: (state, action) => {
+      state.filter = action.payload.filterValue.trim() || '';
     }
   },
 })
 
-export const { add, remove, edit, filter, setList, removeTeg } = notesSlice.actions
+export const { add, remove, edit, filter, setList, removeTeg, changeFilter } = notesSlice.actions
 
 export default notesSlice.reducer

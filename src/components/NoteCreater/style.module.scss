@@ -8,13 +8,12 @@
   -moz-box-shadow: 0px 5px 5px 2px rgba(20, 20, 21, 0.47);
   box-shadow: 0px 5px 5px 2px rgba(20, 20, 21, 0.47);
 }
-.form {
+.form, .filterWrapper {
   display: flex;
   justify-content: space-between;
 }
-.btnWrapper {
-  display: flex;
-  align-items: flex-start;
+.form {
+  align-items: flex-end;
 }
 .input {
   padding: 5px;
@@ -22,11 +21,10 @@
   border-radius: 3px;
   border: none;
   flex-grow: 1;
-  margin-right: 20px;
+  margin-right: 40px;
 }
 
 .btnCreate {
-  margin-right: 20px;
   border: 1px solid var(--text-color1);
   &:hover {
     background-color: var(--text-color1);
@@ -34,6 +32,7 @@
   }
 }
 .btnFilter{
+  min-width: 75px;
   background-color: var(--text-color1);
   color: var(--main-color2);
   &:hover {
@@ -42,7 +41,8 @@
   }
 }
 .inputWrapper {
-  flex-grow: 1;
+
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -50,17 +50,49 @@
   margin-top: 10px;
   color: var(--error-color);
 }
+.filterWrapper {
+  margin-top: 20px;
+  align-items: center;
+}
+.filterLabel {
+  flex-grow: 1;
+  margin-right: 30px;
+}
+.filterLabelText {
+  color: var(--text-color1);
+}
+.filterInput {
+  width: 100%;
+  background: transparent;
+  color: var(--highlight);
+  border: none;
+  padding: 5px;
+  font-size: 18px;
+  border-bottom: 1px solid var(--text-color1);
+}
+
 @media (max-width: 576px) { 
   .form {
     flex-direction: column;
-  }
-  .btnWrapper {
-    margin-top: 20px;
   }
   .NoteCreater {
     padding: 20px 20px;
   }
   .input {
     margin-right: 0px;
+  }
+  .btnCreate {
+    margin-top: 20px;
+  }
+  .filterLabel {
+    width: 100%;
+    margin-right: 0;
+  }
+  .filterWrapper {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .btnFilter{
+    margin-top: 20px;
   }
 }

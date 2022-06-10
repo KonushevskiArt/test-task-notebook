@@ -3,7 +3,7 @@
   border-radius: 5px;
   border: 1px solid var(--text-color1);
   &:hover {
-    border: 1px solid var(--main-color2);
+    border: 1px solid var(--main-color1);
   }
 }
 .tegContent {
@@ -11,6 +11,8 @@
   font-size: 16px;
 }
 .btnRemoveTeg {
+  background: transparent;
+  cursor: pointer;
   border: none;
   padding: 3px;
   fill: var(--text-color1);
