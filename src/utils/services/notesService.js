@@ -1,5 +1,5 @@
 import axios from 'axios';
-const url = 'http://localhost:3000/db.json';
+const url = window.location.href + 'db.json';
 
 const notesService = {
   getAll: () => {
