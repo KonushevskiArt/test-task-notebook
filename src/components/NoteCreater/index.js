@@ -1,37 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import s from './style.module.scss';
 import { useForm } from "react-hook-form";
-import notesService from '../../utils/services/notesService';
 import { createNewNote } from '../../utils/createNewNote';
 import { useDispatch } from 'react-redux';
 import { filter, add, changeFilter } from '../../store/notesSlice';
-import Spinner from '../Spinner';
-import { toast } from 'react-toastify';
-import {toastOptions} from '../../utils/toastOptions';
 
 const NoteCreater = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [filterValue, setFilterValue] = useState('');
   const dispatch = useDispatch()
-  const [isLoading, setLoading] = useState(false);
 
   const onSubmit = ({ title }) => {
     const processedTitle = title.trim(); 
     if (processedTitle) {
       const newNote = createNewNote(processedTitle);
-      setLoading(true);
-      notesService.createOne(newNote)
-      .then(data => {
-        dispatch(add(data));
-        dispatch(filter({filterValue}));
-        setLoading(false);
-        reset();
-      })
-      .catch(error => {
-        setLoading(false);
-        toast.error('Network error!', toastOptions);
-        console.log(error);
-      });
+      dispatch(add(newNote));
+      dispatch(filter({filterValue}));
+      reset();
     }
   };
 
@@ -53,8 +38,8 @@ const NoteCreater = () => {
           <input placeholder='enter text' className={s.input} {...register("title", { maxLength: maxLength })} />
           {errors.title && <span className={s.error}>You can't use more than {maxLength} characters</span>}
         </div>
-        <button disabled={isLoading} type='submit' className={`btn ${s.btnCreate}`}>
-          {isLoading && <Spinner />} create
+        <button type='submit' className={`btn ${s.btnCreate}`}>
+           create
         </button>
       </form>
       <div className={s.filterWrapper}>

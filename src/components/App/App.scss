@@ -38,7 +38,11 @@
   color: var(--highlight);
 }
 .networkError {
-
+  color: var(--text-color1);
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  margin-top: 20px;
 }
 .loading {
   color: var(--text-color1);

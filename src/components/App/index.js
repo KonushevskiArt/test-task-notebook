@@ -7,8 +7,6 @@ import notesService from '../../utils/services/notesService';
 import { useSelector, useDispatch } from 'react-redux';
 import { setList, filter } from '../../store/notesSlice';
 import Modal from '../Modal';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const listOfNotes = useSelector((state) => state.notes.filteredNotes);
@@ -31,6 +29,7 @@ function App() {
         console.log("Network error:", e.message);
       })
   }, [])
+  console.log(listOfNotes)
  
   return (
     <div className="app">
@@ -41,7 +40,6 @@ function App() {
         {listOfNotes && !isLoading && <ListOfNotes listOfNotes={listOfNotes} />}
       </Layout>
       <Modal />
-      <ToastContainer />
     </div>
   );
 }

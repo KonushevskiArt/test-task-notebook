@@ -11,7 +11,7 @@ export const notesSlice = createSlice({
   initialState,
   reducers: {
     setList: (state, action) => {
-      state.listOfNotes = action.payload;
+      state.listOfNotes = action.payload.notes;
     },
     add: (state, action) => {
       state.listOfNotes.push(action.payload);

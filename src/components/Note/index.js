@@ -1,22 +1,16 @@
 import React, {useState} from 'react';
 import s from './style.module.scss';
 import Teg from './Teg';
-import notesService from '../../utils/services/notesService';
 import { useHighlightTags } from '../../hooks/useHighlightTags';
 import { createStrWithTegs } from '../../utils/createStrWithTegs';
 import { createNewNote } from '../../utils/createNewNote';
 import { useDispatch } from 'react-redux';
 import { edit, remove, filter } from '../../store/notesSlice';
 import { show, setContent,  } from '../../store/modalSlice';
-import Spinner from '../Spinner';
-import { toast } from 'react-toastify';
-import {toastOptions} from '../../utils/toastOptions';
 
 const Note = ({ data }) => {
   const { title, id, tegs } = data;
   const dispatch = useDispatch()
-  const [isSaveLoading, setSaveLoading] = useState(false);
-  const [isRemoveLoading, setRemoveLoading] = useState(false);
   const [previousValue, setPreviousValue] = useState(title);
   const [currentTitleWithTegs, setCurrentTitleWithTegs] = useState(title);
   const [isEdit, setEdit] = useState(false);
@@ -27,25 +21,15 @@ const Note = ({ data }) => {
   }
 
   const removeNoteHandler = () => {
-    setRemoveLoading(true);
-    notesService.removeOneById(id)
-    .then(data => {
-      setRemoveLoading(false);
-      dispatch(remove(id));
-      dispatch(filter());
-    })
-    .catch(error => {
-      setRemoveLoading(false);
-      toast.error('Network error!', toastOptions);
-      console.log(error);
-    });
+    dispatch(remove(id));
+    dispatch(filter());
   }
 
   const handleEdit = () => {
     setEdit(true);
     const strWithTegs = createStrWithTegs(title, tegs);
     setCurrentTitleWithTegs(strWithTegs);
-    setPreviousValue(strWithTegs)
+    setPreviousValue(strWithTegs);
   }
 
   const handleChangeTitle = (e) => {
@@ -55,21 +39,10 @@ const Note = ({ data }) => {
   const handleSave = () => {
     if (currentTitleWithTegs !== previousValue) {
       const newNote = createNewNote(currentTitleWithTegs);
-      setSaveLoading(true);
-      notesService.editOneById(id, newNote)
-      .then(data => {
-        setEdit(false);
-        const fullNote = {...newNote, id};
-        setSaveLoading(false);
-        dispatch(edit({id, fullNote}));
-        dispatch(filter());
-      })
-      .catch(error => {
-        setEdit(false);
-        toast.error('Network error!', toastOptions);
-        setSaveLoading(false);
-        console.log(error);
-      });
+      setEdit(false);
+      const fullNote = {...newNote, id};
+      dispatch(edit({id, fullNote}));
+      dispatch(filter());
     }
     else {
       setEdit(false);
@@ -100,12 +73,12 @@ const Note = ({ data }) => {
               edit
             </button>)
             :
-            (<button disabled={isSaveLoading} onClick={handleSave} className={`btn ${s.btnEdit}`}>
-              {isSaveLoading && <Spinner />} save
+            (<button onClick={handleSave} className={`btn ${s.btnEdit}`}>
+              save
             </button>)
           }
-          <button disabled={isRemoveLoading} type='button' onClick={removeNoteHandler} className={`btn ${s.btnRemove}`}>
-            {isRemoveLoading && <Spinner />} remove
+          <button type='button' onClick={removeNoteHandler} className={`btn ${s.btnRemove}`}>
+            remove
           </button>
         </div>
       </div>

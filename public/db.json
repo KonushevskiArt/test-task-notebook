@@ -1,20 +1,27 @@
 {
   "notes": [
     {
-      "title": "hellow world that's my first note ",
+      "title": "go the the shop",
       "tegs": [
-        "that's"
+        "shop"
       ],
-      "id": 1
+      "id": 134534
     },
     {
-      "title": "i am Artem and i want to be frontend dev",
+      "title": "find your notebook, and write your thoughts down",
       "tegs": [
-        "Artem",
-        "i",
-        "dev"
+        "notebook",
+        "thoughts"
       ],
-      "id": 2
+      "id": 237665
+    },
+    {
+      "title": "go to bed before 22 pm",
+      "tegs": [
+        "22",
+        "bed"
+      ],
+      "id": 236547665
     }
   ]
 }
