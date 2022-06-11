@@ -1,14 +1,27 @@
 {
   "notes": [
     {
-      "title": "df",
-      "tegs": [],
-      "id": 1
+      "title": "go the the shop ",
+      "tegs": [
+        "shop"
+      ],
+      "id": 134534
     },
     {
-      "title": "sdf",
-      "tegs": [],
-      "id": 2
+      "title": "find your notebook, and write your thoughts down ",
+      "tegs": [
+        "notebook",
+        "thoughts"
+      ],
+      "id": 237665
+    },
+    {
+      "title": "go to bed before 22 pm ",
+      "tegs": [
+        "22",
+        "bed"
+      ],
+      "id": 236547665
     }
   ]
 }

@@ -15,7 +15,8 @@
   margin-bottom: 15px;
 }
 .title {
-  font-size: 20px;
+  font-size: 18px;
+  flex-grow: 1;
   color: var(--text-color1);
   margin-bottom: 10px;
   margin: 0; 
@@ -24,6 +25,17 @@
   -webkit-box-orient: vertical; 
   overflow: hidden;
   cursor: pointer;
+}
+.editTitle {
+  padding: 10px;
+  overflow: auto;
+  border: 1px solid var(--text-color1);
+  border-radius: 5px;
+  cursor: default;
+}
+.validationMessage {
+  margin-top: 15px;
+  color: var(--error-color);
 }
 .btnWrapper {
   display: flex;

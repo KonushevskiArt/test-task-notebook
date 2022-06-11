@@ -1,23 +1,31 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import s from './style.module.scss';
 import Teg from './Teg';
 import { useHighlightTags } from '../../hooks/useHighlightTags';
-import { createStrWithTegs } from '../../utils/createStrWithTegs';
-import { createNewNote } from '../../utils/createNewNote';
 import { useDispatch } from 'react-redux';
 import { edit, remove, filter } from '../../store/notesSlice';
 import { show, setContent,  } from '../../store/modalSlice';
+import { addNewTegsToNoteFormTitle } from '../../utils/addNewTegsToNoteFormTitle';
+import { validation } from '../../utils/validation';
 
 const Note = ({ data }) => {
   const { title, id, tegs } = data;
+  const refTitle = useRef(null);
   const dispatch = useDispatch()
   const [previousValue, setPreviousValue] = useState(title);
-  const [currentTitleWithTegs, setCurrentTitleWithTegs] = useState(title);
+  const [validErrorMessage, setValidErrorMessage] = useState('');
+  const [isValidError, setValidError] = useState(false);
+  const [currentTitle, setCurrentTitle] = useState(title);
   const [isEdit, setEdit] = useState(false);
 
-  const noteClickHandler = () => {
-    dispatch(show());
-    dispatch(setContent({content: {title, tegs}}));
+  const highLightTitle = useHighlightTags(title, tegs);
+  const classesOfTitle = isEdit ? `${s.title} ${s.editTitle}`: s.title;
+
+  const titleClickHandler = () => {
+    if(!isEdit) {
+      dispatch(show());
+      dispatch(setContent({content: {title, tegs}}));
+    }
   }
 
   const removeNoteHandler = () => {
@@ -25,32 +33,36 @@ const Note = ({ data }) => {
     dispatch(filter());
   }
 
+  useEffect(() => {
+    if(isEdit) refTitle.current.focus();
+  }, [isEdit])
+
   const handleEdit = () => {
     setEdit(true);
-    const strWithTegs = createStrWithTegs(title, tegs);
-    setCurrentTitleWithTegs(strWithTegs);
-    setPreviousValue(strWithTegs);
+    setPreviousValue(currentTitle);
   }
 
   const handleChangeTitle = (e) => {
-    setCurrentTitleWithTegs(e.currentTarget.value);
+    validation.editTitle(e.target.textContent, setValidError, setValidErrorMessage);
+    if (!isValidError) {
+      setCurrentTitle(e.target.textContent);
+    }
   }
 
   const handleSave = () => {
-    if (currentTitleWithTegs !== previousValue) {
-      const newNote = createNewNote(currentTitleWithTegs);
-      setEdit(false);
-      const fullNote = {...newNote, id};
-      dispatch(edit({id, fullNote}));
-      dispatch(filter());
-    }
-    else {
-      setEdit(false);
+    if (!isValidError) {
+      const trimmedCurrentTitle = currentTitle.trim(); 
+      if (trimmedCurrentTitle !== previousValue) { 
+         const updatedNote = addNewTegsToNoteFormTitle(id, trimmedCurrentTitle, tegs);
+         dispatch(edit({id, updatedNote}));
+         dispatch(filter());
+         setEdit(false);
+      }
+      else {
+        setEdit(false);
+      }
     }
   }
-
-  const maxLength = 160;
-  const highLightTitle = useHighlightTags(title, tegs);
 
   return (
     <li className={s.Note}>
@@ -58,19 +70,27 @@ const Note = ({ data }) => {
         {!isEdit && (
           <h4 
             title={!isEdit ? 'click to display the modal window': null}
-            className={s.title} 
-            onClick={noteClickHandler}>
-              {highLightTitle}
+            onClick={titleClickHandler}
+            className={classesOfTitle} >
+              {highLightTitle}  
           </h4>
         )}
-        {isEdit && (
-          <textarea 
-            maxLength={maxLength}
-            defaultValue={currentTitleWithTegs}
-            className={s.textarea} 
-            onChange={(e) => handleChangeTitle(e)}
-          />
-        )}
+        {isEdit && ( 
+            <div>
+              <h4 
+              autoFocus={isEdit}
+              onInput={handleChangeTitle} 
+              ref={refTitle}
+              contentEditable={isEdit} 
+              suppressContentEditableWarning={true}
+              onClick={titleClickHandler}
+              value={highLightTitle}
+              className={classesOfTitle} >
+                {highLightTitle}&nbsp;  
+            </h4>
+            <p className={s.validationMessage}>{validErrorMessage}</p>
+          </div>
+        )} 
         <div className={s.btnWrapper}>
           {!isEdit 
             ? 

@@ -22,7 +22,7 @@ export const notesSlice = createSlice({
     },
     edit: (state, action) => {
       const index = state.listOfNotes.findIndex((el) => el.id === action.payload.id);
-      state.listOfNotes[index] = action.payload.fullNote;
+      state.listOfNotes[index] = action.payload.updatedNote;
     },
     removeTeg: (state, action) => {
       const index = state.listOfNotes.findIndex((el) => el.id === action.payload.id)
